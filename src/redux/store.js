@@ -10,7 +10,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import phonebookReducer from './phonebook/phonebook.reducer';
+import reducer from './phonebook/phonebook.reducer';
 import logger from 'redux-logger';
 
 const middleware = [
@@ -30,7 +30,7 @@ const phonebookPersistConfig = {
 
 const store = configureStore({
   reducer: {
-    contacts: persistReducer(phonebookPersistConfig, phonebookReducer),
+    contacts: persistReducer(phonebookPersistConfig, reducer),
   },
   middleware,
 });
