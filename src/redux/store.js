@@ -10,7 +10,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import phonebookReducer from './phonebook/phonebook-reducer';
+import phonebookReducer from './phonebook/phonebook.reducer';
 import logger from 'redux-logger';
 
 const middleware = [

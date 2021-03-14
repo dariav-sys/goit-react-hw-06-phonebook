@@ -3,7 +3,7 @@ import styles from './ContactForm.module.css';
 
 import shortid from 'shortid';
 import { connect } from 'react-redux';
-import phonebookActions from '../../redux/phonebook/phonebook-actions';
+import phonebookActions from '../../redux/phonebook/phonebook.actions';
 
 class ContactForm extends Component {
   state = {

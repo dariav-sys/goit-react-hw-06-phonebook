@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './ContactItem.module.css';
 import { connect } from 'react-redux';
-import phonebookActions from '../../redux/phonebook/phonebook-actions';
+import phonebookActions from '../../redux/phonebook/phonebook.actions';
 
 const ContactItem = ({ filtered, onDelete }) => {
   return filtered.map(({ name, number, id }) => {
