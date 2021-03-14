@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import phonebookActions from '../../redux/phonebook/phonebook-actions';
 import styles from './Filter.module.css';
 
 const Filter = ({ value, onChange }) => {
@@ -18,4 +20,12 @@ const Filter = ({ value, onChange }) => {
   );
 };
 
-export default Filter;
+const mapStateToProps = state => ({
+  value: state.contacts.filter,
+});
+
+const mapDispatchToProps = dispatch => ({
+  onChange: e => dispatch(phonebookActions.changeFilter(e.target.value)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filter);

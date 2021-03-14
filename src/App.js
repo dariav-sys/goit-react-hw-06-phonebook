@@ -1,71 +1,41 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import ContactForm from './components/contactForm';
 import Filter from './components/filter';
-import ContactList from './components/contactList';
+import ContactItem from './components/contactItem/ContactItem';
 
 class App extends Component {
-  state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
-    filter: '',
-  };
-
-  addContact = contact => {
-    console.log('AddContact');
-    const contactExist = this.state.contacts.find(
-      el => el.name === contact.name || el.number === contact.number,
-    );
-    if (contactExist) {
-      alert('Contact already exists');
-      return;
-    }
-    this.setState(prevState => ({
-      contacts: [...prevState.contacts, contact],
-    }));
-  };
-
-  filterBy = e => {
-    this.setState({ filter: e.target.value });
-  };
-
-  filterContacts = () => {
-    const { contacts, filter } = this.state;
-    const normalized = filter.toLowerCase();
-
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalized),
-    );
-  };
-
-  deleteContact = id => {
-    this.setState(prevState => {
-      const index = prevState.contacts.findIndex(item => item.id === id);
-      const contacts = [
-        ...prevState.contacts.slice(0, index),
-        ...prevState.contacts.slice(index + 1),
-      ];
-      return { contacts };
-    });
-  };
-
   render() {
     return (
       <div className="container">
         <h1 className="header">The Phonebook</h1>
-        <ContactForm onSubmit={this.addContact} />
-        <Filter value={this.state.filter} onChange={this.filterBy} />
-        <ContactList
-          onFilter={this.filterContacts()}
-          onDelete={this.deleteContact}
-        />
+        <ContactForm />
+        <Filter />
+        <ul className="contacts">
+          <ContactItem filtered={this.props.contacts} />
+        </ul>
       </div>
     );
   }
 }
 
-export default App;
+const getFilteredContacts = (allContacts, filter) => {
+  const normalizedFilter = filter.toLowerCase();
+  return allContacts.filter(item =>
+    item.name.toLowerCase().includes(normalizedFilter),
+  );
+};
+
+const mapStateToProps = state => {
+  const { filter, items } = state.contacts;
+  const visibleContacts = getFilteredContacts(items, filter);
+  return {
+    contacts: visibleContacts,
+    filter,
+    isContactIncludes: items.length > 0,
+  };
+};
+
+export default connect(mapStateToProps)(App);

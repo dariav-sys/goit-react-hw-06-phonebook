@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import styles from './ContactForm.module.css';
 
 import shortid from 'shortid';
+import { connect } from 'react-redux';
+import phonebookActions from '../../redux/phonebook/phonebook-actions';
 
 class ContactForm extends Component {
   state = {
@@ -22,7 +24,7 @@ class ContactForm extends Component {
       name: this.state.name,
       number: this.state.number,
     });
-    
+
     this.setState({
       name: '',
       number: '',
@@ -60,4 +62,12 @@ class ContactForm extends Component {
   }
 }
 
-export default ContactForm;
+const mapDispatchToProps = dispatch => ({
+  onSubmit: text => dispatch(phonebookActions.addContact(text)),
+});
+
+const mapStateToProps = state => ({
+  contacts: state.contacts.items,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
