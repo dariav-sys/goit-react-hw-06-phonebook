@@ -4,14 +4,14 @@ import App from './App';
 import './index.css';
 import 'modern-normalize/modern-normalize.css';
 
-import store from './redux/store';
+import { store, persistor } from './redux/store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store.store}>
-      <PersistGate loading={null} persistor={store.persistor}>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
         <App />
       </PersistGate>
     </Provider>

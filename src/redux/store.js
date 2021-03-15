@@ -33,8 +33,9 @@ const store = configureStore({
     contacts: persistReducer(phonebookPersistConfig, reducer),
   },
   middleware,
+  devTools: process.env.NODE_ENV !== 'production',
 });
 
 const persistor = persistStore(store);
 
-export default { store, persistor };
+export { store, persistor };
